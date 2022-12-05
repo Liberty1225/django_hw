@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<ul>
+    <form method="POST" action="{% url 'list_item' %}">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h3>{{ item.item_text }}</h3></legend>
+  <input type="radio" name="item" id="item_{{ item.id }}" value="{{ item.id }}"/>
+    <label for="item_{{ item.id }}">{{ item.name }}</label>
+    <label for="item_{{ item.id }}">{{ item.price }}</label>
+
+
+</ul>
+
+<form method="POST" action="{% url 'detail' item.id %}">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h3>{{ item.item_text }}</h3></legend>
+        {% for purchase in item.purchases.all %}
+            <input type="radio" name="purchase" id="purchase_{{ purchase.id }}" value="{{ purchase.id }}"/>
+            <label for="purchase_{{ purchase.id }}">{{ purchase.purchase_text }}</label>
+            <label for="purchase_{{ purchase.id }}">{{ purchase.name }}</label>
+            <label for="purchase_{{ purchase.id }}">{{ purchase.date_purchase }}</label>
+          {% endfor %}
+
+    </fieldset>
+    <input type="submit" value="Сохранить"/>
+
+</form>
+
+
+</body>
+</html>
